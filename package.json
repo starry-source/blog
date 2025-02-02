@@ -5,10 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node create.js && vite build",
-    "preview": "vite preview",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "fs-extra": "^11.3.0",

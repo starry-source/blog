@@ -52,7 +52,7 @@ async function readDirRecursive(dirPath,name) {
 }
 
 async function generateMarkdownJson() {
-    const markdownRootDir = 'src/docs'; // 存放Markdown文件的目录
+    const markdownRootDir = '../docs'; // 存放Markdown文件的目录
     const outputJsonPath = 'src/posts.js'; // 输出的JSON文件路径
 
   try {

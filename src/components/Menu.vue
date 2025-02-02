@@ -8,11 +8,6 @@
                 <a class="a" v-for="tag in data" :class="{ active: tag.slug == now() }"
                     :href="'#/list/' + tag.slug">{{ tag.name }}</a>
             </div>
-            <span>
-                <!-- p:{{ route.path }}
-                f:{{ route.fullPath }}
-                h:{{ route.hash }} -->
-            </span>
         </div>
     </div>
 </template>
@@ -23,8 +18,10 @@
     justify-content: space-between;
     align-items: center;
     height: 50px;
-    background-color: #fff;
-    box-shadow: 0 1px 7px rgba(0, 0, 0, .2);
+    background-color: #e7e7e780;
+    box-shadow: 0 1px 14px rgba(0, 0, 0, .1);
+    border: 2px solid #7f7f7f30;
+    border-top: none;
     border-radius: 0 0 14px 14px;
     padding: 0 20px;
     margin: 0 10px;
@@ -43,7 +40,7 @@
     /* width: 40px; */
     height: 30px;
     display: block;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .menu {
@@ -51,12 +48,23 @@
     margin-left: 20px;
 }
 
-.menu>a {
-    margin-right: 20px;
+.menu>.a {
+    margin-right: 10px;
     cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 7px;
+    transition: 50ms;
 }
 
-.menu>a.active {
+.menu>.a:not(.active):hover {
+    background-color: #7f7f7f20;
+}
+
+.menu>.a:not(.active):active {
+    opacity: 0.7;
+}
+
+.menu>.a.active {
     color: #2983cc;
     font-weight: bold;
 }

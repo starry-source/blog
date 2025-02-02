@@ -40,6 +40,20 @@ const router = createRouter({
     routes
 })
 
+function init() {
+            
+    if (window.innerHeight>630) {
+        if(window.innerWidth<window.innerHeight){
+            document.body.classList.add('mobile');
+        }else{
+            document.body.classList.remove('mobile');
+        }
+    }else{
+        document.body.classList.remove('mobile');
+    }
+}
+window.onresize=init;
+init();
 
 
 createApp(App).use(router).mount('#app')
