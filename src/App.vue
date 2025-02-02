@@ -6,7 +6,7 @@
 
 <script setup>
 import Menu from './components/Menu.vue';
-import { provide } from 'vue';
+import { provide, reactive } from 'vue';
 import { data } from './posts.js';
 
 
@@ -15,7 +15,7 @@ import { data } from './posts.js';
 // const route = ()
 // console.log(route.path, route.fullPath, route.name);
 
-provide('data', data);
+provide('data', reactive(data));
 
 // import Menu from './components/Menu.vue';
 // import { provide, ref } from 'vue';

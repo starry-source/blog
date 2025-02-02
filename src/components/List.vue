@@ -1,24 +1,24 @@
 <template>
   <div id="path">
-      <a href="/list" class="a" v-if="route.params.path">blog</a>
+      <a href="#/list" class="a" v-if="route.params.path">blog</a>
       <a class="text" v-else>blog</a>
-      <a v-for="(item,index) in route.params.path" :href="(index==route.params.path.length-1)?null:('/list/'+route.params.path.slice(0,index+1).join('/'))" :class="(index==route.params.path.length-1)?'text':'a'">{{ item }}</a>
+      <a v-for="(item,index) in route.params.path" :href="(index==route.params.path.length-1)?null:('#/list/'+route.params.path.slice(0,index+1).join('/'))" :class="(index==route.params.path.length-1)?'text':'a'">{{ item }}</a>
   </div>
   <div id="body">
-    <span id="dictname">{{ directory.name }}</span>
-    <span id="dictdetail">{{ directory.detail }}</span>
-    <div v-if="directory.file" class="list file" :class="{big:path!=''}">
+    <span id="dictname">{{ directory().name }}</span>
+    <span id="dictdetail">{{ directory().detail }}</span>
+    <div v-if="directory().file" class="list file" :class="{big:path()!=''}">
       
-      <a class="a" v-for="file in directory.file" :href="'/cnt'+path+'/'+file.slug">
-        <span class="type" v-if="path!=''">文章</span>
+      <a class="a" v-for="file in directory().file" :href="'#/cnt'+path()+'/'+file.slug">
+        <span class="type" v-if="path()!=''">文章</span>
         <span class="name">{{ file.title }}</span>
-        <span class="type" v-if="path!=''">{{ file.slug }}.md</span>
+        <span class="type" v-if="path()!=''">{{ file.slug }}.md</span>
       </a>
     </div>
-    <div v-if="directory.folder" class="list dict" :class="{big:path==''}">
+    <div v-if="directory().folder" class="list dict" :class="{big:path()==''}">
       
-      <a class="a" v-for="folder in directory.folder" :href="'/list'+path+'/'+folder.slug">
-        <span class="type" v-if="path==''">分类</span>
+      <a class="a" v-for="folder in directory().folder" :href="'#/list'+path()+'/'+folder.slug">
+        <span class="type" v-if="path()==''">分类</span>
         <span class="name">{{ folder.name }}</span>
       </a>
 
@@ -83,24 +83,30 @@
 </style>
 
 <script setup>
-import { inject } from 'vue';
+import { inject,reactive,ref } from 'vue';
 import { useRoute } from 'vue-router'
 
 
 const route = useRoute()
 
-let directory = inject('data');
+let data = inject('data');
 // let directory = data.value;
 // import DirectoryTree from './DirectoryTree.vue'; // 假设你有一个递归组件
-let path='';
-if(route.params.path){
-  for (const i of route.params.path) {
-    directory=directory.folder[i];
+
+function directory(){
+  let ret=data;
+  if(route.params.path){
+    for (const i of route.params.path) {
+      ret=ret.folder[i];
+    }
+    
   }
-  path='/'+route.params.path.join('/');
+  return ret;
 }
 
-
+function path(){
+  return route.params.path?'/'+route.params.path.join('/'):''; 
+}
 
 // const directory = data.value[route.params.name];
 // console.log(data);

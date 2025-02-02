@@ -1,13 +1,18 @@
 <template>
     <div id="header">
         <div class="left">
-            <a href="/" class="a"><img src="../assets/ico.svg"/></a>
+            <a href="#/" class="a"><img src="../assets/ico.svg"/></a>
             
             <div class="menu">
-                <a class="a" :class="{ active: nw == 'home' }" href="/">红木</a>
-                <a class="a" v-for="tag in data" :class="{ active: tag.slug == nw }"
-                    :href="'/list/' + tag.slug">{{ tag.name }}</a>
+                <a class="a" :class="{ active: now() == 'home' }" href="#/">红木</a>
+                <a class="a" v-for="tag in data" :class="{ active: tag.slug == now() }"
+                    :href="'#/list/' + tag.slug">{{ tag.name }}</a>
             </div>
+            <span>
+                <!-- p:{{ route.path }}
+                f:{{ route.fullPath }}
+                h:{{ route.hash }} -->
+            </span>
         </div>
     </div>
 </template>
@@ -57,17 +62,26 @@
 }
 </style>
 
+
 <script setup>
 import { inject } from 'vue';
+import { useRoute } from 'vue-router'
 
-let currentRouter=(new URL(window.location.href)).pathname.split('/'),nw='home';
-if(currentRouter.length)
-for(let i=0;i<currentRouter.length;i++){
-    if(currentRouter[i]!='' && currentRouter[i]!='list' && currentRouter[i]!='cnt'){
-        nw=currentRouter[i];
-        break;
+
+function now() {
+    let route = useRoute();
+    let currentRouter=route.path.split('/'),nw='home';
+    if(currentRouter.length)
+    for(let i=0;i<currentRouter.length;i++){
+        if(currentRouter[i]!='' && currentRouter[i]!='list' && currentRouter[i]!='cnt'){
+            nw=currentRouter[i];
+            break;
+        }
     }
+    // console.log(nw);
+    return nw;
 }
+
 
 let data = inject('data');
 data = data.folder;

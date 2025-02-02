@@ -1,7 +1,7 @@
 <template>
     <div id="path">
-        <a href="/list" class="a">blog</a>
-        <a v-for="(item,index) in route.params.path" :href="(index==route.params.path.length-1)?null:('/list/'+route.params.path.slice(0,index+1).join('/'))" :class="(index==route.params.path.length-1)?'text':'a'">{{ item }}</a>
+        <a href="#/list" class="a">blog</a>
+        <a v-for="(item,index) in route.params.path" :href="(index==route.params.path.length-1)?null:('#/list/'+route.params.path.slice(0,index+1).join('/'))" :class="(index==route.params.path.length-1)?'text':'a'">{{ item }}</a>
     </div>
     <div v-html="file.content" id="body"></div>
   </template>
