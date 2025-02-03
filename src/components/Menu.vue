@@ -17,9 +17,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
-    background-color: #e7e7e780;
-    box-shadow: 0 1px 14px rgba(0, 0, 0, .1);
+    height: 60px;
+    background-color: #ffffffc0;
+    box-shadow: 0 1px 14px rgba(0, 0, 0, .15);
     border: 2px solid #7f7f7f30;
     border-top: none;
     border-radius: 0 0 14px 14px;
@@ -30,6 +30,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
+    backdrop-filter: blur(20px) saturate(2) contrast(0.7);
 }
 
 .left {
@@ -38,18 +39,18 @@
 }
 .left>.a>img{
     /* width: 40px; */
-    height: 30px;
+    height: 32px;
     display: block;
-    margin-right: 5px;
+    margin: 0 3px;
 }
 
 .menu {
     display: flex;
-    margin-left: 20px;
+    margin-left: 14px;
 }
 
 .menu>.a {
-    margin-right: 10px;
+    margin-right: 8px;
     cursor: pointer;
     padding: 3px 7px;
     border-radius: 7px;

@@ -10,21 +10,21 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-    - name: Checkout code
+    - name: 检查代码
       uses: actions/checkout@v2
  
-    - name: Use Node.js
+    - name: 启用 Nodejs
       uses: actions/setup-node@v2
       with:
         node-version: '22'
  
-    - name: Install dependencies
+    - name: 安装依赖
       run: npm install
  
-    - name: Build
+    - name: 构建项目
       run: npm run build
  
-    - name: Deploy to GitHub Pages
+    - name: 部署到 GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.KEY }}

@@ -1,10 +1,84 @@
 import fs from 'fs-extra'
 import path from 'path'
 import MarkdownIt from 'markdown-it'
+import markdownItHighlightjs from 'markdown-it-highlightjs'
+import hljs from 'highlight.js'
 
+const myCustomLanguage = {
+  case_insensitive: true,
+  contains: [
+    {
+      className: 'comment',
+      begin: '\\(', 
+      end: '\\)',
+      contains: []
+    },
+    {
+      className: 'comment',
+      begin: '\\（', 
+      end: '\\）',
+      contains: []
+    },
+    {
+      className: 'string',
+      begin: '"',
+      end: '"',
+      contains: []
+    },
+    {
+      className: 'string',
+      begin: '“',
+      end: '”',
+      contains: []
+    },
+    {
+      className: 'string',
+      begin: "'",
+      end: "'",
+      contains: []
+    },
+    {
+      className: 'string',
+      begin: "‘",
+      end: "’",
+      contains: []
+    },
+    {
+      className: 'string',
+      begin: "「",
+      end: "」",
+      contains: []
+    },
+    {
+      className: 'title',
+      begin: '# ?[\\s\\S]+?\n',
+      returnEnd: true
+    }
+  ]
+};
+
+
+// 注册自定义语言到 highlight.js
+hljs.registerLanguage('liter', ()=>myCustomLanguage);
+
+// hljs
 const md = new MarkdownIt({
-    linkify: true
+    linkify: true,
+    html:true
 });
+
+md.use(markdownItHighlightjs);
+md.use((m)=>{
+  m.renderer.rules.link_open = (tokens, idx, options, env, self) => {
+    const hrefIndex = tokens[idx].attrIndex('href');
+    const href = tokens[idx].attrs[hrefIndex][1];
+    return `<a href="${href}" class="a jump">`;  // 添加自定义 class 或其他属性
+  };
+  m.renderer.rules.code_inline = (tokens, idx, options, env, self) => {
+    return `<code class="inline">${tokens[idx].content}</code>`;  // 添加自定义 class 或其他属性
+  }
+  // m.renderer.rules.link_close = () => '</a>';
+})
 
 async function readDirRecursive(dirPath,name) {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
@@ -25,7 +99,7 @@ async function readDirRecursive(dirPath,name) {
     } else if (entry.isFile() && entry.name.endsWith('.md')) {
       // 处理 Markdown 文件
       const fileContent = await fs.readFile(fullPath, 'utf8');
-      const htmlContent = md.render(fileContent).replace(/&lt;!-.*--&gt;/g, '');
+      const htmlContent = md.render(fileContent.replace(/<!-.*-->/g, ''));
       const slug = path.basename(fullPath, '.md');
 
       // const titleMatch = fileContent.match(/^# (.*)/m);

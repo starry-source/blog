@@ -54,6 +54,21 @@
 
 #body {
   margin: 0 50px;
+  /* animation: fade 500ms; */
+}
+
+#path>*, #cnt{
+  animation: fade 500ms;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 body.mobile #body {
@@ -83,7 +98,10 @@ body.mobile #cnt{
 }
 
 .list {
-  margin: 10px 20px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #ffffffa0;
+  border-radius: 10px;
 }
 
 body.mobile .list{
@@ -130,7 +148,6 @@ body.mobile .list.big>.a{
   font-size: 15px;
 }
 </style>
-
 <script setup>
 import { inject, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router'
