@@ -85,7 +85,7 @@ body.mobile #body {
   font-size: 17px;
   display: block;
   margin-left: 10px;
-  color: #555;
+  color: #888;
   margin-bottom: 20px;
 }
 
@@ -146,6 +146,14 @@ body.mobile .list.big>.a{
 .list.big>.a>.type {
   color: #777;
   font-size: 15px;
+}
+@media (prefers-color-scheme: dark){
+  .list{
+    background-color: #000000a0;
+  }
+  #path>.a:hover{
+    color: #61ccff;
+  }
 }
 </style>
 <script setup>

@@ -20,7 +20,7 @@
     height: 60px;
     background-color: #ffffffc0;
     box-shadow: 0 1px 14px rgba(0, 0, 0, .15);
-    border: 2px solid #7f7f7f30;
+    border: 2px solid #8f8f8f30;
     border-top: none;
     border-radius: 0 0 14px 14px;
     padding: 0 20px;
@@ -58,7 +58,7 @@
 }
 
 .menu>.a:not(.active):hover {
-    background-color: #7f7f7f20;
+    background-color: #8f8f8f20;
 }
 
 .menu>.a:not(.active):active {
@@ -68,6 +68,17 @@
 .menu>.a.active {
     color: #2983cc;
     font-weight: bold;
+}
+@media (prefers-color-scheme: dark){
+    #header{
+        background-color: #171717c0;
+    }
+    .left>.a>img{
+        filter: invert(0.98);
+    }
+    .menu>.a.active{
+        color:#61ccff
+    }
 }
 </style>
 

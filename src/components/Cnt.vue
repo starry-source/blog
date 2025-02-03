@@ -52,6 +52,15 @@
     border-radius: 10px;
     animation: fade 500ms;
 }
+
+@media (prefers-color-scheme: dark){
+    #body{
+        background-color: #000000a0;
+    }
+    #path>.a:hover{
+        color: #61ccff;
+    }
+}
 </style>
 <style>
 
@@ -61,7 +70,7 @@ pre code.hljs{
     padding: 20px;
     max-width: 100%;
     font-size: 14px;
-    /* border: 2px solid #7f7f7f; */
+    /* border: 2px solid #8f8f8f; */
 }
 
 pre code.hljs.language-liter{
@@ -143,14 +152,14 @@ blockquote{
     margin-inline-end: 0;
     padding: 5px 5px 5px 15px;
     border-radius: 0 10px 10px 0;
-    background-color: #7f7f7f14;
+    background-color: #8f8f8f14;
     border-left: 3px solid #2983cc;
 }
 blockquote p{
     margin: 2px 0;
 }
 code.inline{
-    background-color: #7f7f7f27;
+    background-color: #8f8f8f30;
     border-radius: 5px;
     padding: 3px 5px;
     font-size: 0.9em;
@@ -172,12 +181,43 @@ thead tr {
 /* 表头单元格样式 */
 th, td {
     padding: 12px 15px;
-    border: 1px solid #7f7f7f70;
+    border: 1px solid #8f8f8f70;
     /* border-width: ; */
 }
 
 tbody tr:nth-of-type(even) {
-    background-color: #7f7f7f18;
+    background-color: #8f8f8f18;
+}
+
+@media (prefers-color-scheme: dark){
+    .a.jump{
+        color: #61ccff;
+    }
+    blockquote{
+        border-left-color: #61ccff;
+    }
+    
+    pre code.hljs.language-liter{
+        background-color: #3b3832ce;
+        color: #f2f2f2;
+    }
+    .hljs.language-liter::selection,
+    .hljs.language-liter *::selection{
+        background-color: #c7a07230;
+        text-decoration: underline #d1a674;
+        /* color: #fff; */
+    }
+    code.hljs.language-liter .hljs-comment{
+        color: #999;
+    }
+    code.hljs.language-liter .hljs-title{
+        color: #eee;
+        
+    }
+    code.hljs.language-liter .hljs-string{
+        color: #64b2f1;
+        
+    }
 }
 
 </style>

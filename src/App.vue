@@ -1,6 +1,9 @@
 <template>
   <Menu></Menu>
   <router-view></router-view>
+  
+  <link rel="stylesheet" href="/github.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="/github-dark.min.css" media="(prefers-color-scheme: dark)">
   <!-- <p>app: {{ data }}</p> -->
 </template>
 

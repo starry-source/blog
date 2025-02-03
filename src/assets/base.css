@@ -64,7 +64,7 @@ button {
   align-items: flex-start;
   cursor: default;
   box-sizing: border-box;
-  background-color: #7f7f7f20;
+  background-color: #8f8f8f20;
   margin: 0em;
   padding: 1px 6px;
   border-width: 2px;
@@ -96,7 +96,7 @@ a:-webkit-any-link {
   border-radius: 7px;
 }
 .list>.a:hover{
-  background-color: #7f7f7f20;
+  background-color: #8f8f8f20;
 }
 .list>.a:active{
   opacity: 0.7;
@@ -120,4 +120,16 @@ body{
   height: 100%;
   overflow: scroll;
   padding-bottom: 30px;
+}
+
+@media (prefers-color-scheme: dark){
+  body{
+    color: #eee;
+  }
+  #app{
+    background-color: #000000c0;
+  }
+  .a{
+    color:#eee;
+  }
 }
