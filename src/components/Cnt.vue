@@ -10,7 +10,6 @@
 </template>
 <style scoped>
 
-
 @keyframes fade {
   from {
     opacity: 0;
@@ -19,28 +18,6 @@
   to {
     opacity: 1;
   }
-}
-
-#path {
-    display: flex;
-    margin-left: 20px;
-    margin-top: 20px;
-    user-select: none;
-}
-
-#path>* {
-    margin-left: 5px;
-    animation: fade 500ms;
-}
-
-#path>.a:hover {
-    color: #2983cc;
-}
-
-#path>*:not(:first-child)::before {
-    content: '/';
-    margin-right: 5px;
-    color: #777;
 }
 
 #body {
@@ -57,9 +34,6 @@
     #body{
         background-color: #000000a0;
     }
-    #path>.a:hover{
-        color: #61ccff;
-    }
 }
 </style>
 <style>
@@ -70,7 +44,7 @@ pre code.hljs{
     padding: 20px;
     max-width: 100%;
     font-size: 14px;
-    /* border: 2px solid #8f8f8f; */
+    border: 2px solid #8f8f8f27;
 }
 
 pre code.hljs.language-liter{
@@ -159,7 +133,7 @@ blockquote p{
     margin: 2px 0;
 }
 code.inline{
-    background-color: #8f8f8f30;
+    background-color: #afafaf35;
     border-radius: 5px;
     padding: 3px 5px;
     font-size: 0.9em;
@@ -200,6 +174,9 @@ tbody tr:nth-of-type(even) {
     pre code.hljs.language-liter{
         background-color: #3b3832ce;
         color: #f2f2f2;
+    }
+    pre code.hljs{
+        background-color: #171717;
     }
     .hljs.language-liter::selection,
     .hljs.language-liter *::selection{

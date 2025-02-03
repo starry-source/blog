@@ -31,33 +31,13 @@
 </template>
 
 <style scoped>
-#path {
-  display: flex;
-  margin-left: 20px;
-  margin-top: 20px;
-  user-select: none;
-}
-
-#path>* {
-  margin-left: 5px;
-}
-
-#path>.a:hover {
-  color: #2983cc;
-}
-
-#path>*:not(:first-child)::before {
-  content: '/';
-  margin-right: 5px;
-  color: #777;
-}
 
 #body {
   margin: 0 50px;
   /* animation: fade 500ms; */
 }
 
-#path>*, #cnt{
+#cnt{
   animation: fade 500ms;
 }
 
@@ -150,9 +130,6 @@ body.mobile .list.big>.a{
 @media (prefers-color-scheme: dark){
   .list{
     background-color: #000000a0;
-  }
-  #path>.a:hover{
-    color: #61ccff;
   }
 }
 </style>
