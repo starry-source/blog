@@ -1,5 +1,6 @@
 
 <template>
+  <title>{{ file.title }} | 星源的 Blog</title>
     <div id="path">
         <a href="#/list" class="a">blog</a>
         <a v-for="(item, index) in route.params.path"

@@ -1,4 +1,5 @@
 <template>
+  <title>星源的 Blog</title>
   <div id="path">
     <a href="#/list" class="a" v-if="route.params.path">blog</a>
     <a class="text" v-else>blog</a>
@@ -8,7 +9,7 @@
   </div>
   <div id="body">
     <span id="dictname">{{ directory().name }}</span>
-    <span id="dictdetail">{{ directory().detail }}</span>
+    <span id="dictdetail" v-html="directory().detail"></span>
     <div id="cnt">
       <div v-if="Object.keys(directory().file).length" class="list file" :class="{ big: path() != '' }">
 
