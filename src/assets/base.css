@@ -64,7 +64,7 @@ button {
   align-items: flex-start;
   cursor: default;
   box-sizing: border-box;
-  background-color: #8f8f8f20;
+  background-color: #a0a0a020;
   margin: 0em;
   padding: 1px 6px;
   border-width: 2px;
@@ -96,7 +96,7 @@ a:-webkit-any-link {
   border-radius: 7px;
 }
 .list>.a:hover{
-  background-color: #8f8f8f20;
+  background-color: #a0a0a020;
 }
 .list>.a:active{
   opacity: 0.7;

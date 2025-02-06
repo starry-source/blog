@@ -7,12 +7,24 @@
             :class="(index == route.params.path.length - 1) ? 'text' : 'a'">{{ (index == route.params.path.length - 1)?item+'.md':item }}</a>
     </div>
     <div id="body">
-        <div v-html="file.content"></div>
+        <div v-html="file.content" id="cnt-cnt"></div>
         <div class="article-actions">
-            <a class="button" @click="clearHighlight" v-if="hasHighlight" title="清除高亮">
-                <i class="fas fa-eraser"></i>清除高亮
-            </a>
-            <a class="button" @click="shareArticle" title="复制文章链接">
+            <div v-if="hasHighlight" class="hlbox">
+                <a class="button" @click="prevHighlight" title="上一个匹配">
+                    <i class="fas fa-chevron-up"></i>
+                </a>
+                <a class="highlight-count">
+                    {{ currentHighlightIndex + 1 }}/{{ highlightCount }}
+                </a>
+                <a class="button" @click="nextHighlight" title="下一个匹配">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <a class="button" @click="clearHighlight">
+                    <i class="fas fa-eraser"></i>
+                    清除高亮
+                </a>
+            </div>
+            <a class="button" @click="shareArticle">
                 <i :class="copied ? 'fas fa-check' : 'fas fa-link'"></i>
                 {{ copied ? '已复制' : '复制链接' }}
             </a>
@@ -54,9 +66,10 @@
     bottom: 20px;
     right: 20px;
     margin: 0;
+    user-select: none;
 }
 
-.article-actions .button {
+.article-actions>.button {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -65,21 +78,55 @@
     border-radius: 7px;
     background: #2983cc;
     color: white;
-    cursor: pointer;
+    cursor: default;
     transition: 100ms;
+    font-size: 1em !important;
 }
 
-.article-actions .button:hover {
+.article-actions>.button:hover {
     filter: brightness(1.15);
 }
 .article-actions .button:active {
     opacity: 0.7;
 }
 
+.article-actions>.hlbox{
+    display: flex;
+    padding: 5px;
+    background-color: #ffffffd0;
+    color: #000;
+    backdrop-filter: blur(5px);
+    border-radius: 7px;
+    gap: 10px;
+}
+.article-actions>.hlbox>*{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    /* padding: 3px 12px; */
+    border: none;
+    border-radius: 7px;
+    /* background: #2983cc; */
+    cursor: default;
+    transition: 100ms;
+}
+.article-actions>.hlbox>.button{
+    border-radius: 5px;
+    padding: 1px 7px;
+}
+.article-actions>.hlbox>.button:hover{
+    background-color: #a0a0a029;
+}
+
+
 @media (prefers-color-scheme: dark) {
-    .article-actions .button {
+    .article-actions>.button {
         background: #61ccff;
         color: #000;
+    }
+    .article-actions>.hlbox{
+        color: #fff;
+        background-color: #333333c0;
     }
 }
 </style>
@@ -91,7 +138,7 @@ pre code.hljs{
     padding: 20px;
     max-width: 100%;
     font-size: 14px;
-    border: 2px solid #8f8f8f27;
+    border: 2px solid #a0a0a027;
 }
 
 pre code.hljs.language-liter{
@@ -173,7 +220,7 @@ blockquote{
     margin-inline-end: 0;
     padding: 5px 5px 5px 15px;
     border-radius: 0 10px 10px 0;
-    background-color: #8f8f8f14;
+    background-color: #a0a0a014;
     border-left: 3px solid #2983cc;
 }
 blockquote p{
@@ -202,12 +249,12 @@ thead tr {
 /* 表头单元格样式 */
 th, td {
     padding: 12px 15px;
-    border: 1px solid #8f8f8f70;
+    border: 1px solid #a0a0a070;
     /* border-width: ; */
 }
 
 tbody tr:nth-of-type(even) {
-    background-color: #8f8f8f18;
+    background-color: #a0a0a018;
 }
 
 @media (prefers-color-scheme: dark){
@@ -250,6 +297,12 @@ mark {
     padding: 2px;
     margin: -4px;
     border-radius: 5px;
+    transition: 100ms ease;
+}
+
+mark.current {
+    background-color: #2983cc;
+    color: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -257,6 +310,10 @@ mark {
         background-color: #61ccff37;
         border-color: #61ccff80;
         color: #fff;
+    }
+    mark.current {
+        background-color: #61ccff;
+        color: #000;
     }
 }
 </style>
@@ -280,6 +337,8 @@ file = file.file[route.params.path[route.params.path.length - 1]];
 
 const hasHighlight = ref(false);
 const copied = ref(false);
+const currentHighlightIndex = ref(0);
+const highlightCount = ref(0);
 
 function shareArticle() {
     navigator.clipboard.writeText(window.location.href)
@@ -294,15 +353,33 @@ function shareArticle() {
 function clearHighlight() {
     const baseHash = window.location.hash.split('?')[0];
     window.location.hash = baseHash;
-    
-    // 移除所有高亮
-    document.querySelectorAll('mark').forEach(el => {
-        const parent = el.parentNode;
-        parent.replaceChild(document.createTextNode(el.textContent), el);
-        parent.innerHTML=parent.innerHTML;
-    });
-    
+
     hasHighlight.value = false;
+    document.querySelector('#cnt-cnt').innerHTML=file.content;
+}
+
+function scrollToHighlight(index) {
+    const highlights = document.querySelectorAll('mark');
+    if (highlights.length === 0) return;
+    
+    // 确保索引在有效范围内
+    currentHighlightIndex.value = Math.max(0, Math.min(index, highlights.length - 1));
+    
+    const target = highlights[currentHighlightIndex.value];
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // 移除之前的当前高亮样式
+    highlights.forEach(h => h.classList.remove('current'));
+    // 添加当前高亮样式
+    target.classList.add('current');
+}
+
+function nextHighlight() {
+    scrollToHighlight((currentHighlightIndex.value + 1) % highlightCount.value);
+}
+
+function prevHighlight() {
+    scrollToHighlight((currentHighlightIndex.value - 1 + highlightCount.value) % highlightCount.value);
 }
 
 function highlightText() {
@@ -324,11 +401,7 @@ function highlightText() {
     hasHighlight.value = true;
     
     // 清除旧的高亮
-    document.querySelectorAll('mark').forEach(el => {
-        const parent = el.parentNode;
-        parent.replaceChild(document.createTextNode(el.textContent), el);
-        parent.innerHTML=parent.innerHTML;
-    });
+    document.querySelector('#cnt-cnt').innerHTML=file.content;
     
     const content = document.querySelector('#body');
     if (!content) return;
@@ -364,8 +437,20 @@ function highlightText() {
     });
     // 添加新的高亮
     
+    // 更新高亮计数
+    const highlights = document.querySelectorAll('mark');
+    highlightCount.value = highlights.length;
+    currentHighlightIndex.value = 0;
+    
+    // 如果有高亮结果，自动滚动到第一个
+    if (highlights.length > 0) {
+        nextTick(() => {
+            scrollToHighlight(0);
+        });
+    }
 }
 
+// 添加键盘快捷键支持
 onMounted(() => {
     nextTick(() => {
         highlightText();
@@ -374,6 +459,17 @@ onMounted(() => {
         nextTick(() => {
             highlightText();
         });
+    });
+    window.addEventListener('keydown', (e) => {
+        if (!hasHighlight.value) return;
+        
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            nextHighlight();
+        } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+            e.preventDefault();
+            prevHighlight();
+        }
     });
 });
 
