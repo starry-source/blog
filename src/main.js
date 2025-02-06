@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/base.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
@@ -8,6 +9,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from './components/Home.vue'
 import Cnt from './components/Cnt.vue'
 import List from './components/List.vue';
+import Search from './components/Search.vue'
 
 let routes=[
     // {
@@ -27,6 +29,10 @@ let routes=[
     {
         path: '/cnt/:path*',
         component: Cnt,
+    },
+    {
+        path: '/search',
+        component: Search,
     },
     // {
     //     path:'/list/:name',

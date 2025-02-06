@@ -1,4 +1,3 @@
-
 <template>
   <title>{{ file.title }} | 星源的 Blog</title>
     <div id="path">
@@ -7,7 +6,18 @@
             :href="(index == route.params.path.length - 1) ? null : ('#/list/' + route.params.path.slice(0, index + 1).join('/'))"
             :class="(index == route.params.path.length - 1) ? 'text' : 'a'">{{ (index == route.params.path.length - 1)?item+'.md':item }}</a>
     </div>
-    <div v-html="file.content" id="body"></div>
+    <div id="body">
+        <div v-html="file.content"></div>
+        <div class="article-actions">
+            <a class="button" @click="clearHighlight" v-if="hasHighlight" title="清除高亮">
+                <i class="fas fa-eraser"></i>清除高亮
+            </a>
+            <a class="button" @click="shareArticle" title="复制文章链接">
+                <i :class="copied ? 'fas fa-check' : 'fas fa-link'"></i>
+                {{ copied ? '已复制' : '复制链接' }}
+            </a>
+        </div>
+    </div>
 </template>
 <style scoped>
 
@@ -34,6 +44,42 @@
 @media (prefers-color-scheme: dark){
     #body{
         background-color: #000000a0;
+    }
+}
+
+.article-actions {
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    margin: 0;
+}
+
+.article-actions .button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border: none;
+    border-radius: 7px;
+    background: #2983cc;
+    color: white;
+    cursor: pointer;
+    transition: 100ms;
+}
+
+.article-actions .button:hover {
+    filter: brightness(1.15);
+}
+.article-actions .button:active {
+    opacity: 0.7;
+}
+
+@media (prefers-color-scheme: dark) {
+    .article-actions .button {
+        background: #61ccff;
+        color: #000;
     }
 }
 </style>
@@ -198,13 +244,28 @@ tbody tr:nth-of-type(even) {
     }
 }
 
+mark {
+    background-color: #2983cc40;
+    border: 2px solid #2983cc;
+    padding: 2px;
+    margin: -4px;
+    border-radius: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+    mark {
+        background-color: #61ccff37;
+        border-color: #61ccff80;
+        color: #fff;
+    }
+}
 </style>
 
 <script setup>
-import { inject } from 'vue';
+import { inject, onMounted, onUnmounted, ref, nextTick } from 'vue';
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
+const route = useRoute();
 
 let file = inject('data');
 // let directory = data.value;
@@ -217,4 +278,106 @@ file = file.file[route.params.path[route.params.path.length - 1]];
 // path='/'+route.params.path.join('/');
 //   }
 
+const hasHighlight = ref(false);
+const copied = ref(false);
+
+function shareArticle() {
+    navigator.clipboard.writeText(window.location.href)
+        .then(() => {
+            copied.value = true;
+            setTimeout(() => {
+                copied.value = false;
+            }, 2000);
+        });
+}
+
+function clearHighlight() {
+    const baseHash = window.location.hash.split('?')[0];
+    window.location.hash = baseHash;
+    
+    // 移除所有高亮
+    document.querySelectorAll('mark').forEach(el => {
+        const parent = el.parentNode;
+        parent.replaceChild(document.createTextNode(el.textContent), el);
+        parent.innerHTML=parent.innerHTML;
+    });
+    
+    hasHighlight.value = false;
+}
+
+function highlightText() {
+    const hashParts = window.location.hash.split('?');
+    if (hashParts.length < 2) {
+        hasHighlight.value = false;
+        clearHighlight();
+        return;
+    }
+    
+    const params = new URLSearchParams(hashParts[1]);
+    const query = params.get('highlight');
+    
+    if (!query) {
+        hasHighlight.value = false;
+        clearHighlight();
+        return;
+    }
+    hasHighlight.value = true;
+    
+    // 清除旧的高亮
+    document.querySelectorAll('mark').forEach(el => {
+        const parent = el.parentNode;
+        parent.replaceChild(document.createTextNode(el.textContent), el);
+        parent.innerHTML=parent.innerHTML;
+    });
+    
+    const content = document.querySelector('#body');
+    if (!content) return;
+
+    const walker = document.createTreeWalker(
+        content,
+        NodeFilter.SHOW_TEXT,
+        {
+            acceptNode: function(node) {
+                return node.parentNode.nodeName !== 'SCRIPT' && 
+                       node.parentNode.nodeName !== 'STYLE' ? 
+                       NodeFilter.FILTER_ACCEPT : 
+                       NodeFilter.FILTER_REJECT;
+            }
+        },
+        false
+    );
+    
+    const regex = new RegExp(query, 'gi');
+    const nodesToReplace = [];
+    let node;
+    
+    while (node = walker.nextNode()) {
+        if (node.textContent.match(regex)) {
+            nodesToReplace.push(node);
+        }
+    }
+    
+    nodesToReplace.forEach(node => {
+        const span = document.createElement('span');
+        span.innerHTML = node.textContent.replace(regex, '<mark>$&</mark>');
+        node.parentNode.replaceChild(span, node);
+    });
+    // 添加新的高亮
+    
+}
+
+onMounted(() => {
+    nextTick(() => {
+        highlightText();
+    });
+    window.addEventListener('hashchange', () => {
+        nextTick(() => {
+            highlightText();
+        });
+    });
+});
+
+onUnmounted(() => {
+    window.removeEventListener('hashchange', highlightText);
+});
 </script>
