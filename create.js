@@ -53,6 +53,21 @@ const myCustomLanguage = {
       className: 'title',
       begin: '# ?[\\s\\S]+?\n',
       returnEnd: true
+    },
+    {
+      className: 'author',
+      begin: '作者：?[\\s\\S]+?\n',
+      returnEnd: true
+    },
+    {
+      className: 'comment',
+      begin: '[，；]',
+      returnEnd: true
+    },
+    {
+      className: 'long',
+      begin: '[…—]+',
+      returnEnd: true
     }
   ]
 };
@@ -64,23 +79,54 @@ hljs.registerLanguage('liter', ()=>myCustomLanguage);
 // hljs
 const md = new MarkdownIt({
     linkify: true,
-    html:true
+    html: true
 });
 
 md.use(markdownItHighlightjs);
 md.use((m)=>{
+  // 修改链接渲染，处理相对路径为"./assets/..."（考虑当前 Markdown 文件所在目录）
   m.renderer.rules.link_open = (tokens, idx, options, env, self) => {
     const hrefIndex = tokens[idx].attrIndex('href');
-    const href = tokens[idx].attrs[hrefIndex][1];
-    return `<a href="${href}" class="a jump">`;  // 添加自定义 class 或其他属性
+    let href = tokens[idx].attrs[hrefIndex][1];
+    if(!href.startsWith('http') && !href.startsWith('mailto:')){
+      const base = env && env.base ? env.base.replace(/\\/g, '/') + '/' : '';
+      href = './assets/' + base + href;
+      tokens[idx].attrs[hrefIndex][1] = href;
+    }
+    return `<a href="${href}" class="a jump">`;
   };
   m.renderer.rules.code_inline = (tokens, idx, options, env, self) => {
-    return `<code class="inline">${tokens[idx].content}</code>`;  // 添加自定义 class 或其他属性
-  }
-  // m.renderer.rules.link_close = () => '</a>';
+    return `<code class="inline">${tokens[idx].content}</code>`;
+  };
+  // 修改图片渲染，同样根据 env.base 拼接资源路径
+  m.renderer.rules.image = (tokens, idx, options, env, self) => {
+    const srcIndex = tokens[idx].attrIndex('src');
+    let src = tokens[idx].attrs[srcIndex][1];
+    if(!src.startsWith('http') && !src.startsWith('mailto:')){
+      const base = env && env.base ? env.base.replace(/\\/g, '/') + '/' : '';
+      src = './assets/' + base + src;
+      tokens[idx].attrs[srcIndex][1] = src;
+    }
+    return self.renderToken(tokens, idx, options);
+  };
 })
 
-async function readDirRecursive(dirPath,name) {
+async function copyAssets(srcDir, destDir) {
+  const entries = await fs.readdir(srcDir, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = path.join(srcDir, entry.name);
+    const destPath = path.join(destDir, entry.name);
+    if (entry.isDirectory()) {
+      await fs.ensureDir(destPath);
+      await copyAssets(srcPath, destPath);
+    } else if (entry.isFile() && !entry.name.endsWith('.md') && entry.name !== 'info.json') {
+      await fs.copy(srcPath, destPath);
+    }
+  }
+}
+
+async function readDirRecursive(dirPath, name, rootDir) {
+  rootDir = rootDir || dirPath;
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const result = {
     folder: {},
@@ -92,54 +138,44 @@ async function readDirRecursive(dirPath,name) {
 
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
-
     if (entry.isDirectory()) {
       // 递归
-      result.folder[entry.name]=await readDirRecursive(fullPath,entry.name);
+      result.folder[entry.name] = await readDirRecursive(fullPath, entry.name, rootDir);
     } else if (entry.isFile() && entry.name.endsWith('.md')) {
-      // 处理 Markdown 文件
       const fileContent = await fs.readFile(fullPath, 'utf8');
-      const htmlContent = md.render(fileContent.replace(/<!-.*-->/g, ''));
+      // 计算当前 Markdown 文件相对于 docs 根目录的子路径，用于构造资源文件路径
+      const relDir = path.relative(rootDir, path.dirname(fullPath));
+      const htmlContent = md.render(fileContent.replace(/<!-.*-->/g, ''), { base: relDir });
       const slug = path.basename(fullPath, '.md');
-
-      // const titleMatch = fileContent.match(/^# (.*)/m);
-      // const title = titleMatch ? titleMatch[1] : 'Untitled';
-      const titleMatch = fileContent.match(/^<!-- name=(.+) -->/m)
+      const titleMatch = fileContent.match(/^<!-- name=(.+) -->/m);
       const title = titleMatch ? titleMatch[1] : slug;
-
-      result.file[slug]={
+      result.file[slug] = {
         slug,
         title,
         content: htmlContent,
       };
-    } else if (entry.isFile() && entry.name=='info.json') {
+    } else if (entry.isFile() && entry.name == 'info.json') {
       const fileContent = await fs.readFile(fullPath, 'utf8');
       let info = JSON.parse(fileContent);
-      // console.log(info);
-
-      result.name=info.name||name;
-      result.detail=info.detail||'';
+      result.name = info.name || name;
+      result.detail = info.detail || '';
     }
   }
-
   return result;
 }
 
 async function generateMarkdownJson() {
-    const markdownRootDir = '../docs'; // 存放Markdown文件的目录
-    const outputJsonPath = 'src/posts.js'; // 输出的JSON文件路径
+  const markdownRootDir = '../docs'; // 存放Markdown文件的目录
+  const outputJsonPath = 'src/posts.js'; // 输出的JSON文件路径
+  const assetsDest = path.join('public', 'assets'); // 资源文件目标目录
 
   try {
-    const formattedPosts = await readDirRecursive(markdownRootDir,'docs');
-
-    // 将对象转换为数组，以便每个分类都是一个对象数组
-    // const formattedPosts = Object.keys(postsByCategory).map(category => ({
-    //   category,
-    //   posts: postsByCategory[category],
-    // }));
+    // 先复制资源文件
+    await fs.ensureDir(assetsDest);
+    await copyAssets(markdownRootDir, assetsDest);
     
-
-    await fs.writeFile(outputJsonPath, 'export let data='+JSON.stringify(formattedPosts, null, 2)+';', 'utf8');
+    const formattedPosts = await readDirRecursive(markdownRootDir, 'docs', markdownRootDir);
+    await fs.writeFile(outputJsonPath, 'export let data=' + JSON.stringify(formattedPosts, null, 2) + ';', 'utf8');
     console.log('Markdown JSON generated successfully!');
   } catch (err) {
     console.error('Error generating Markdown JSON:', err);

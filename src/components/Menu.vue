@@ -2,7 +2,7 @@
     <div id="header" :class="{ active: isMobileMenuOpen }">
         <div class="trueheader">
             <div class="left">
-                <a href="#/" class="a"><img src="../assets/ico.svg" /></a>
+                <a href="#/" class="a" id="logo"><img src="../assets/ico.svg" /></a>
 
                 <div class="menu">
                     <a class="a" :class="{ active: now() == 'home' }" href="#/">红木</a>

@@ -21,7 +21,7 @@
                 </a>
                 <a class="button" @click="clearHighlight">
                     <i class="fas fa-eraser"></i>
-                    清除高亮
+                    清除搜索
                 </a>
             </div>
             <a class="button" @click="shareArticle">
@@ -142,7 +142,7 @@ pre code.hljs{
 }
 
 pre code.hljs.language-liter{
-    white-space: pre-line;
+    white-space: pre-wrap;
     background-color: #f0ebdcce;
     color: #000;
     font-size: 1.2em;
@@ -164,8 +164,20 @@ code.hljs.language-liter .hljs-title{
     
 }
 code.hljs.language-liter .hljs-string{
-    color: #237bc4;
+    color: #164a75;
     
+}
+code.hljs.language-liter .hljs-long{
+    display: inline-block;
+    transform: translateY(-2px);
+    letter-spacing: 5px;
+    margin: 0 5px;
+}
+
+
+code.hljs.language-liter .hljs-author{
+    color: #999;
+    font-size: 0.9em;
 }
 
 .a.jump{
@@ -286,7 +298,7 @@ tbody tr:nth-of-type(even) {
         
     }
     code.hljs.language-liter .hljs-string{
-        color: #64b2f1;
+        color: #83b5de;
         
     }
 }
