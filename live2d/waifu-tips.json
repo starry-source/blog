@@ -1,0 +1,45 @@
+{
+	"mouseover": [{
+		"selector": "#live2d",
+		"text": ["你好。"]
+	}, {
+		"selector": "#waifu-tool-switch-model",
+		"text": ["点击按钮，可以切换看板娘。"]
+	}, {
+		"selector": "#waifu-tool-switch-texture",
+		"text": ["点击按钮，小概率可以换装。"]
+	}, {
+		"selector": "#waifu-tool-info",
+		"text": ["点击查看 Live2D 看板娘 Github 仓库。"]
+	}, {
+		"selector": "#waifu-tool-quit",
+		"text": ["关掉。"]
+	}, {
+		"selector": "#logo",
+		"text": ["是的，这两个字是<span>「星源」</span>，是有那么一点难以辨认。"]
+	}],
+	"click": [{
+		"selector": "#live2d",
+		"text": ["她本来会骂你的。"]
+	}],
+	"seasons": [{
+		"date": "01/01",
+		"text": "今年是{year}年了。今天是<span>元旦</span>。"
+	},{
+		"date": "05/01",
+		"text": "今天是<span>五一劳动节</span>。按照惯例会放五天假。"
+	}, {
+		"date": "10/01-10/03",
+		"text": "<span>国庆节</span>到了。按照惯例会放七天假。"
+	}],
+	"time": [{
+		"hour": "0-4",
+		"text": "你是夜猫子呀？这么晚还不睡觉，明天起的来嘛？"
+	}],
+	"message": {
+		"default": ["好久不见，日子过得好快呢……", "大坏蛋！你都多久没理人家了呀，嘤嘤嘤～", "嗨～快来逗我玩吧！", "拿小拳拳锤你胸口！", "记得把小家加入收藏夹哦！"],
+		"console": "注意到用户打开了控制台。好像不起作用？",
+		"copy": "注意到用户进行了复制操作。转载文章需要注明出处。",
+		"visibilitychange": ["注意到页面重新得到了用户焦点。"]
+	}
+}
