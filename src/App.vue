@@ -15,11 +15,11 @@
 }
 
 #path>* {
-  margin-left: 5px;
+  margin-left: 7px;
 }
 
 #path>.a:hover {
-  color: #2983cc;
+  color: var(--theme);
 }
 
 #path>.a:active {
@@ -27,15 +27,11 @@
 }
 
 #path>*:not(:first-child)::before {
-  content: '/';
-  margin-right: 5px;
+  content: '\F105';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  margin-right: 7px;
   color: #777;
-}
-
-@media (prefers-color-scheme: dark){
-  #path>.a:hover{
-    color: #61ccff;
-  }
 }
 
 </style>

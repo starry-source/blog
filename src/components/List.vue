@@ -81,7 +81,7 @@ body.mobile #cnt{
 .list {
   padding: 10px;
   margin: 10px;
-  background-color: #ffffffa0;
+  /* background-color: #ffffffa0; */
   border-radius: 10px;
 }
 
@@ -130,7 +130,7 @@ body.mobile .list.big>.a{
 }
 @media (prefers-color-scheme: dark){
   .list{
-    background-color: #000000a0;
+    /* background-color: #000000a0; */
   }
 }
 </style>

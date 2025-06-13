@@ -47,7 +47,7 @@ const router = createRouter({
 })
 
 function init() {
-    if (window.innerWidth<550) {
+    if (window.innerWidth<600) {
         document.body.classList.add('mobile');
     }else{
         document.body.classList.remove('mobile');

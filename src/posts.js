@@ -6,8 +6,13 @@ export let data={
           "folder": {},
           "slug": "poems",
           "name": "诗",
-          "detail": "随意收了几首。",
+          "detail": "从诗集里胡乱选了几首。",
           "file": {
+            "0sj": {
+              "slug": "0sj",
+              "title": "诗集",
+              "content": "<p>胡乱收集并整理了不同年段所作诗。</p>\n<p>未收入某些或文笔太差的，或没有代表性的，或有强目的性的，或内容上不适宜的诗作。</p>\n<p>另外，有部分诗作时年久远而无法忆起，又草稿丢失，故亦未收集。</p>\n<p>拙作形式、内容、观点参差，多有谬误或不适合处，阅者海涵。</p>\n<p>另限于年龄与阅历，中有立意、观点、看法不合甚至错误者，万望理解。</p>\n<p><a href=\"./assets/liter/poems/../hb.pdf\" class=\"a jump\">下载</a></p>\n"
+            },
             "hq": {
               "slug": "hq",
               "title": "汇泉",
@@ -26,14 +31,26 @@ export let data={
             "sx": {
               "slug": "sx",
               "title": "盛夏",
-              "content": "<p>时间过得确实快。</p>\n<pre><code class=\"hljs language-liter\"><span class=\"hljs-title\"># 盛夏\n</span><span class=\"hljs-author\">作者：星源\n</span>我何德何才？\n    云烟过眼<span class=\"hljs-comment\">，</span>几番冬去<span class=\"hljs-comment\">，</span>几载春来？\n叹年华难再。\n    依稀耳畔<span class=\"hljs-comment\">，</span>歌声又起：栀子花开。\n\n垂髫童蒙<span class=\"hljs-comment\">，</span>放浪形骸<span class=\"hljs-comment\">，</span>\n    岂知那百日誓师、斗志盈怀？\n无知的小脑袋\n    还不晓天高地厚、炎凉世态,\n更不知华年的诗酒<span class=\"hljs-comment\">，</span>\n    会去得有多快！\n呵<span class=\"hljs-comment\">，</span>蠢才<span class=\"hljs-comment\">，</span>\n    连<span class=\"hljs-string\">「内卷」</span>都不明白。\n\n\n<span class=\"hljs-long\">——</span>风<span class=\"hljs-comment\">，</span>舞起了衣着纷乱<span class=\"hljs-comment\">，</span>\n却扬不起长发四散<span class=\"hljs-comment\">，</span>\n更吹不出泪珠一串。\n\n榕树上丝缕<span class=\"hljs-comment\">，</span>\n    在熹微阳光下低垂<span class=\"hljs-comment\">；</span>\n草丛间蝴蝶<span class=\"hljs-comment\">，</span>\n    于拂面微风里翻飞。\n绿荫里漫步<span class=\"hljs-comment\">，</span>\n    晨曦映下了斑驳零碎<span class=\"hljs-comment\">；</span>\n暴雨中狂奔<span class=\"hljs-comment\">，</span>\n    积水溅起了\n    一串眼泪。\n\n破水惊浪<span class=\"hljs-comment\">，</span>\n    吟着江风起兮袍袖飏<span class=\"hljs-comment\">；</span>\n龙盘叠嶂<span class=\"hljs-comment\">，</span>\n    写下乾坤广兮沧海茫。\n春和景上<span class=\"hljs-comment\">，</span>\n    颂于林间穿梭 无意花香<span class=\"hljs-comment\">；</span>\n台前远望<span class=\"hljs-comment\">，</span>\n    看高楼\n    挡住了夕阳。\n走廊尽头<span class=\"hljs-comment\">，</span>\n    望一缕\n    透过的月光。\n\n那我问你：何谓盛夏？\n盛夏就是暑假<span class=\"hljs-comment\">，</span>暑假就是玩耍。\n盛夏就是毕业<span class=\"hljs-comment\">，</span>毕业就是离别。\n盛夏就是上课<span class=\"hljs-comment\">，</span>就是弯道超车。\n盛夏就是中考<span class=\"hljs-comment\">，</span>\n    各得其所的\n    投林飞鸟<span class=\"hljs-comment\">，</span>\n    离别已不重要。\n关键是\n    能暂且溯回到\n    他厌倦了的\n    无忧逍遥\n    ？\n盛夏就是高考<span class=\"hljs-long\">……</span>\n\n\n我走在夏夜的灯下路漫漫<span class=\"hljs-comment\">，</span>\n打起斜风里的雨伞<span class=\"hljs-comment\">，</span>\n扬起的衣着纷乱<span class=\"hljs-comment\">，</span>\n记忆却吹不散。\n我还记得前天的春来姗姗\n    与昨天的乍暖还寒。\n春天竟也没了\n    生机的期盼<span class=\"hljs-comment\">，</span>\n    权当了冬夏的过渡段<span class=\"hljs-comment\">，</span>\n    谁又奈何得这般\n    你追我赶？\n去年才是中考<span class=\"hljs-comment\">，</span>\n明年就是高三。\n我踱着的步伐缓慢<span class=\"hljs-comment\">，</span>\n    也已不耐烦。\n人也拼命往前赶<span class=\"hljs-comment\">，</span>\n天也忙着<span class=\"hljs-comment\">，</span>将春秋书页翻。\n远望着栀子花\n    开得烂漫<span class=\"hljs-comment\">，</span>\n    三春聚散<span class=\"hljs-comment\">，</span>\n    与我何干？\n盛夏一番又一番<span class=\"hljs-comment\">，</span>\n还来不及青春浪漫<span class=\"hljs-comment\">，</span>\n又已是秋雨潺潺。 \n\n\n</code></pre>\n"
+              "content": "<p>时间过得确实快。</p>\n<pre><code class=\"hljs language-liter\"><span class=\"hljs-title\"># 盛夏\n</span><span class=\"hljs-author\">作者：星源\n</span>我何德何才？\n    云烟过眼<span class=\"hljs-comment\">，</span>几番冬去<span class=\"hljs-comment\">，</span>几载春来？\n叹年华难再。\n    依稀耳畔<span class=\"hljs-comment\">，</span>歌声又起：栀子花开。\n\n垂髫童蒙<span class=\"hljs-comment\">，</span>放浪形骸<span class=\"hljs-comment\">，</span>\n    岂知那百日誓师、斗志盈怀？\n无知的小脑袋\n    还不晓天高地厚、炎凉世态,\n更不知华年的诗酒<span class=\"hljs-comment\">，</span>\n    会去得有多快！\n呵<span class=\"hljs-comment\">，</span>蠢才<span class=\"hljs-comment\">，</span>\n    连<span class=\"hljs-string\">「内卷」</span>都不明白。\n\n\n<span class=\"hljs-long\">——</span>风<span class=\"hljs-comment\">，</span>舞起了衣着纷乱<span class=\"hljs-comment\">，</span>\n却扬不起长发四散<span class=\"hljs-comment\">，</span>\n更吹不落泪珠一串。\n\n榕树上丝缕<span class=\"hljs-comment\">，</span>\n    在熹微阳光下低垂<span class=\"hljs-comment\">；</span>\n草丛间蝴蝶<span class=\"hljs-comment\">，</span>\n    于拂面微风里翻飞。\n绿荫里漫步<span class=\"hljs-comment\">，</span>\n    晨曦映下了斑驳零碎<span class=\"hljs-comment\">；</span>\n暴雨中狂奔<span class=\"hljs-comment\">，</span>\n    积水溅起了\n    一串眼泪。\n\n破水惊浪<span class=\"hljs-comment\">，</span>\n    吟着江风起兮袍袖飏<span class=\"hljs-comment\">；</span>\n龙盘叠嶂<span class=\"hljs-comment\">，</span>\n    写下乾坤广兮沧海茫。\n春和景上<span class=\"hljs-comment\">，</span>\n    颂于林间穿梭 无意花香<span class=\"hljs-comment\">；</span>\n台前远望<span class=\"hljs-comment\">，</span>\n    看高楼\n    挡住了夕阳。\n走廊尽头<span class=\"hljs-comment\">，</span>\n    望一缕\n    透过的月光。\n\n那我问你：何谓盛夏？\n盛夏就是暑假<span class=\"hljs-comment\">，</span>暑假就是玩耍。\n盛夏就是毕业<span class=\"hljs-comment\">，</span>毕业就是离别。\n盛夏就是上课<span class=\"hljs-comment\">，</span>就是弯道超车。\n盛夏就是中考<span class=\"hljs-comment\">，</span>\n    各得其所的\n    投林飞鸟<span class=\"hljs-comment\">，</span>\n    离别已不重要。\n关键是\n    能暂且溯回到\n    他厌倦了的\n    无忧逍遥\n    ？\n盛夏就是高考<span class=\"hljs-long\">……</span>\n\n\n我走在夏夜的昏黄路漫漫<span class=\"hljs-comment\">，</span>\n打起斜风里的雨伞<span class=\"hljs-comment\">，</span>\n扬起的衣着纷乱<span class=\"hljs-comment\">，</span>\n记忆却吹不散。\n我还记得前天的春来姗姗\n    与昨天的乍暖还寒。\n春天竟也没了\n    生机的期盼<span class=\"hljs-comment\">，</span>\n    权当了冬夏的过渡段<span class=\"hljs-comment\">，</span>\n    谁又奈何得这般\n    你追我赶？\n去年才是中考<span class=\"hljs-comment\">，</span>\n明年就是高三。\n我踱着的步伐缓慢<span class=\"hljs-comment\">，</span>\n    也已不耐烦。\n人也拼命往前赶<span class=\"hljs-comment\">，</span>\n天也忙着<span class=\"hljs-comment\">，</span>将春秋书页翻。\n远望着栀子花\n    开得烂漫<span class=\"hljs-comment\">，</span>\n    三春聚散<span class=\"hljs-comment\">，</span>\n    与我何干？\n盛夏一番又一番<span class=\"hljs-comment\">，</span>\n还来不及青春浪漫<span class=\"hljs-comment\">，</span>\n又已是秋雨潺潺。 \n\n\n</code></pre>\n"
             },
             "tdgw": {
               "slug": "tdgw",
               "title": "土地的过往",
               "content": "<pre><code class=\"hljs language-liter\"><span class=\"hljs-title\"># 土地的过往\n</span><span class=\"hljs-author\">作者：星源\n</span>\n日月轮转几亿载\n始从土地上发芽\n沧桑流淌几千秋\n磨砺中绽放开花\n自然之伟造就\n土地滋养着他\n可花朵一支\n终不敌洪水洗刷\n\n我小时无知\n曾飞过那湾海峡\n俯瞰那遍地零碎的红\n天真地幻想\n花还留下最后的茬\n如今忆起<span class=\"hljs-comment\">，</span>笑笑\n多傻\n他已死于狐狸的爪牙\n只留下空洞的骨架\n\n再望向曾滋养他的土地\n<span class=\"hljs-long\">——</span>见证了无尽风浪\n他承载过日益的光辉灿烂\n经历过多少兴衰沧桑\n他看着光辉的缔造者没落\n又挽起大厦之断梁\n他望着灿烂被抛弃\n以灭掉玷污他的豺狼\n他们不顾元气大伤\n又冲向新的目标\n<span class=\"hljs-long\">——</span>那抹遥远的红光\n土地承受了太多\n叹口气道：\n道阻且长\n\n若举世皆孔丘\n又何需如此条框\n内心深处有火\n才走得远而长\n呜呼！\n酌仙酿倾于东海\n但余无尽清浪\n取仙草掺于粪土\n何人识其芳香\n散于天地不寻影矣\n只余涛涛沧浪\n\n九天之上降旨：\n    红霞太过渺茫\n    拾回曾经的灿烂罢\n    重铸我自信与辉煌！\n然而他不是物主\n拾不回真正的宝藏\n手中的只会是工具\n筑起的只有是城墙\n你若问我：\n那究竟是神圣之何方？\n我且问你：\n谁人将其滋养？\n\n残魂未断尚\n再放万丈光\n</code></pre>\n"
+            },
+            "yyyh": {
+              "slug": "yyyh",
+              "title": "雨游颐和",
+              "content": "<p>前去北京颐和园游玩，适逢雨。</p>\n<pre><code class=\"hljs language-liter\"><span class=\"hljs-title\"># 雨游颐和\n</span><span class=\"hljs-author\">作者：星源\n</span>水亦澹澹天亦茫<span class=\"hljs-comment\">，</span>上下烟笼一色苍\n拂风凫鸭浮浪起<span class=\"hljs-comment\">，</span>清波青天轻柳扬\n畔湖随波看草绿<span class=\"hljs-comment\">，</span>穿桥过殿观雕梁\n红绿躁者荷似伞<span class=\"hljs-comment\">，</span>歪斜击叶雨拥忙\n金珠碧宝万寿山<span class=\"hljs-comment\">，</span>黛瓦青砖寂寥旁\n翼者古亭纳景广<span class=\"hljs-comment\">，</span>茫然残世存红墙\n\n</code></pre>\n"
             }
           }
+        },
+        "wen": {
+          "folder": {},
+          "slug": "wen",
+          "name": "文",
+          "detail": "以后有时间了就写些文。",
+          "file": {}
         }
       },
       "slug": "liter",

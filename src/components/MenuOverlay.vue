@@ -276,7 +276,7 @@ watch(() => props.isSearchFocused, (newVal) => {
     align-items: center;
     background: #ffffffc0;
     backdrop-filter: blur(15px);
-    border: 1px solid #7f7f7f30;
+    border: 2px solid #a0a0a040;
     border-radius: 14px;
     padding: 5px 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -324,7 +324,7 @@ watch(() => props.isSearchFocused, (newVal) => {
     border-radius: 14px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     padding: 10px;
-    border: 1px solid #70707040;
+    border: 2px solid #a0a0a040;
 }
 
 .search-scope,

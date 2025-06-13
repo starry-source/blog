@@ -10,6 +10,10 @@ body {
   scroll-behavior: smooth;
 }
 
+:root{
+  --theme: #2983cc;
+}
+
 *, ::after, ::before {
   box-sizing: border-box;
 }
@@ -89,6 +93,7 @@ a:-webkit-any-link {
   display: flex;
   flex-direction: column;
   width: 100%;
+  border: 2px solid #90909040;
   /* align-items: ; */
 }
 .list>.a{
@@ -96,7 +101,7 @@ a:-webkit-any-link {
   border-radius: 7px;
 }
 .list>.a:hover{
-  background-color: #a0a0a020;
+  background-color: #90909020;
 }
 .list>.a:active{
   opacity: 0.7;
@@ -131,5 +136,8 @@ body{
   }
   .a{
     color:#eee;
+  }
+  :root{
+    --theme: #61ccff;
   }
 }

@@ -21,6 +21,9 @@
                     <a href="https://github.com/starry-source" target="_blank" title="GitHub" class="a">
                         <i class="fab fa-github" style="font-size: 18px;"></i>
                     </a>
+                    <a href="https://starry-source.github.io/qq" target="_blank" title="QQ" class="a">
+                        <i class="fa-brands fa-qq"></i>
+                    </a>
                     <a href="https://space.bilibili.com/2010692096" target="_blank" title="Bilibili" class="a">
                         <i class="fab fa-bilibili"></i>
                     </a>
@@ -43,6 +46,9 @@
             <div class="social-icons">
                 <a href="https://github.com/starry-source" target="_blank">
                     <i class="fab fa-github"></i>GitHub
+                </a>
+                <a href="https://starry-source.github.io/qq" target="_blank">
+                    <i class="fa-brands fa-qq"></i> QQ
                 </a>
                 <a href="https://github.com/starry-source/blog" target="_blank">
                     <i class="fas fa-code-branch"></i>项目仓库
@@ -69,8 +75,8 @@
     max-height: 60px;
     background-color: #ffffffc0;
     box-shadow: 0 1px 14px rgba(0, 0, 0, .15);
-    border: 2px solid #a0a0a030;
-    border-top: none;
+    /* border: 2px solid #a0a0a030;
+    border-top: none; */
     border-radius: 0 0 14px 14px;
     margin: 0 10px;
     position: fixed;
@@ -80,7 +86,36 @@
     z-index: 1000;
     backdrop-filter: blur(20px) saturate(2) contrast(0.7);
     overflow: hidden;
-    transition: 200ms;
+    transition: max-height 200ms;
+}
+
+#header::before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border: 3px solid transparent;
+    border-radius: inherit;
+    border-top: none;
+    background: linear-gradient(to right, #69c2ee, #cd6cca) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -100;
+    filter: saturate(0.6);
+    /* scale: 0.9; */
+    opacity: 0;
+    transition: 200ms 150ms, filter 300ms 300ms;
+}
+
+#header:hover::before,
+#header.active::before{
+    opacity: 1;
+    filter: none;
+    /* scale: 1; */
 }
 
 #header>.trueheader {
@@ -93,7 +128,7 @@
 }
 
 #header.active {
-    max-height: 280px;
+    max-height: 250px;
 }
 
 .left {
@@ -123,7 +158,7 @@
 
 .menu>.a:not(.active):hover,
 .menu-items>.a:not(.active):hover {
-    background-color: #a0a0a020;
+    background-color: #a7a7a730;
 }
 
 .menu>.a:not(.active):active,
@@ -133,13 +168,17 @@
 
 .menu>.a.active,
 .menu-items>.a.active {
-    color: #2983cc;
+    color: var(--theme);
     font-weight: bold;
 }
 
 @media (prefers-color-scheme: dark) {
     #header {
-        background-color: #171717c0;
+        background-color: #111111c0;
+    }
+
+    #header::before{
+        background: linear-gradient(to right, #1f5b8a, #88178a) border-box;
     }
 
     .left>.a>img {
@@ -148,6 +187,19 @@
 
     .menu>.a.active {
         color: #61ccff
+    }
+
+    .left>.a>img {
+        filter: invert(0.98);
+    }
+
+
+    .social-icons a {
+        color: #999;
+    }
+
+    .social-icons a:hover {
+        color: #61ccff;
     }
 }
 
@@ -163,7 +215,7 @@
 }
 
 .social-icons>a {
-    color: #666;
+    color: #999;
     font-size: 17px;
     transition: color 0.2s;
 }
@@ -210,7 +262,6 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 10px;
     font-size: 1.2em;
 }
 
@@ -222,9 +273,11 @@
 
 .mobile-menu .social-icons {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    /* flex-direction: column; */
     gap: 5px;
     padding: 0 15px;
+    margin-top: 17px;
 }
 
 .mobile-menu .social-icons a {
@@ -234,28 +287,6 @@
     font-size: 1em;
 }
 
-/* 深色模式 */
-@media (prefers-color-scheme: dark) {
-    #header {
-        background-color: #171717c0;
-    }
-
-    .left>.a>img {
-        filter: invert(0.98);
-    }
-
-    .menu>.a.active {
-        color: #61ccff;
-    }
-
-    .social-icons a {
-        color: #999;
-    }
-
-    .social-icons a:hover {
-        color: #61ccff;
-    }
-}
 
 body.mobile {
 
@@ -286,14 +317,14 @@ body.mobile {
     padding-right: 20px;
     border-radius: 7px;
     cursor: default;
-    color: #666;
+    color: #999;
     transition: 100ms;
     margin-right: 15px;
     user-select: none;
 }
 
 .search-trigger:hover {
-    background: #a0a0a020;
+    background: #a7a7a730;
 }
 
 .search-trigger:active {

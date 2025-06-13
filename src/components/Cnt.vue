@@ -139,6 +139,7 @@ pre code.hljs{
     max-width: 100%;
     font-size: 14px;
     border: 2px solid #a0a0a027;
+    font-family: 'Cascadia Code','Ubuntu Mono', 'Consolas', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI';
 }
 
 pre code.hljs.language-liter{
@@ -161,7 +162,6 @@ code.hljs.language-liter .hljs-title{
     color: #070707;
     font-weight: bold;
     font-size: 1.4em;
-    
 }
 code.hljs.language-liter .hljs-string{
     color: #164a75;
@@ -239,10 +239,11 @@ blockquote p{
     margin: 2px 0;
 }
 code.inline{
-    background-color: #afafaf35;
+    background-color: #b0b0b043;
     border-radius: 5px;
     padding: 3px 5px;
     font-size: 0.9em;
+    font-family: 'Cascadia Code','Ubuntu Mono', 'Consolas', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI';
 }
 
 /* 通用表格样式 */
