@@ -4,71 +4,58 @@ import MarkdownIt from 'markdown-it'
 import markdownItHighlightjs from 'markdown-it-highlightjs'
 import hljs from 'highlight.js'
 
+// Define reusable modes for contains
+const longMode = {
+  className: 'long',
+  begin: '[…—]+',
+  returnEnd: false
+};
+
+const commentMode = {
+  className: 'comment',
+  variants: [
+    { begin: '[，；]' },
+    { begin: '\\(', end: '\\)', contains: [longMode] },
+    { begin: '\\（', end: '\\）', contains: [longMode] }
+  ],
+  returnEnd: false
+};
+
+const stringMode = {
+  className: 'string',
+  variants: [
+    { begin: '"', end: '"' },
+    { begin: '“', end: '”' },
+    { begin: "'", end: "'" },
+    { begin: "‘", end: "’" },
+    { begin: "「", end: "」" }
+  ],
+  returnEnd: false,
+  contains: [longMode, commentMode] 
+};
+
+const titleMode = {
+  className: 'title',
+  begin: '# ?',
+  end: '\n',
+  returnEnd: true,
+  contains: [longMode] 
+};
+
+const authorMode = {
+  className: 'author',
+  begin: '作者：?[\\s\\S]+?\n',
+  returnEnd: true
+};
+
 const myCustomLanguage = {
   case_insensitive: true,
   contains: [
-    {
-      className: 'comment',
-      begin: '\\(', 
-      end: '\\)',
-      contains: []
-    },
-    {
-      className: 'comment',
-      begin: '\\（', 
-      end: '\\）',
-      contains: []
-    },
-    {
-      className: 'string',
-      begin: '"',
-      end: '"',
-      contains: []
-    },
-    {
-      className: 'string',
-      begin: '“',
-      end: '”',
-      contains: []
-    },
-    {
-      className: 'string',
-      begin: "'",
-      end: "'",
-      contains: []
-    },
-    {
-      className: 'string',
-      begin: "‘",
-      end: "’",
-      contains: []
-    },
-    {
-      className: 'string',
-      begin: "「",
-      end: "」",
-      contains: []
-    },
-    {
-      className: 'title',
-      begin: '# ?[\\s\\S]+?\n',
-      returnEnd: true
-    },
-    {
-      className: 'author',
-      begin: '作者：?[\\s\\S]+?\n',
-      returnEnd: true
-    },
-    {
-      className: 'comment',
-      begin: '[，；]',
-      returnEnd: true
-    },
-    {
-      className: 'long',
-      begin: '[…—]+',
-      returnEnd: true
-    }
+    longMode,
+    commentMode,
+    stringMode,
+    titleMode,
+    authorMode
   ]
 };
 

@@ -100,11 +100,11 @@
     border: 3px solid transparent;
     border-radius: inherit;
     border-top: none;
-    background: linear-gradient(to right, #69c2ee, #cd6cca) border-box;
+    background: linear-gradient(to right, #59bbec, #d973e0) border-box;
     -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    z-index: -100;
+    z-index: -1;
     filter: saturate(0.6);
     /* scale: 0.9; */
     opacity: 0;
@@ -178,7 +178,7 @@
     }
 
     #header::before{
-        background: linear-gradient(to right, #1f5b8a, #88178a) border-box;
+        background: linear-gradient(to right, #3187a9, #ab49b4) border-box;
     }
 
     .left>.a>img {

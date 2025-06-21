@@ -59,6 +59,11 @@
     }
 }
 
+body.mobile #body{
+    margin: 20px 0;
+    border-radius: 0;
+}
+
 .article-actions {
     display: flex;
     gap: 10px;
@@ -299,7 +304,7 @@ tbody tr:nth-of-type(even) {
         
     }
     code.hljs.language-liter .hljs-string{
-        color: #83b5de;
+        color: #b4d5f0;
         
     }
 }
