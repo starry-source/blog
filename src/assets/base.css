@@ -125,6 +125,8 @@ body{
   height: 100%;
   overflow: scroll;
   padding-bottom: 30px;
+  
+  scroll-behavior: smooth;
 }
 
 @media (prefers-color-scheme: dark){

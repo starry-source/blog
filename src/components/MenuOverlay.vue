@@ -5,8 +5,8 @@
                 <div class="search-container" @click.stop>
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" v-model="searchQuery" placeholder="搜索..." @keyup.enter="handleSearch"
-                        @keydown.up.prevent="handleScopeNavigation(-1)" @keydown.down.prevent="handleScopeNavigation(1)"
-                        @keydown.esc="closeSearch" ref="searchInput" autofocus />
+                        @keydown.up.prevent="handleNavigation(-1)" @keydown.down.prevent="handleNavigation(1)"
+                        @keydown.esc="closeSearch" ref="searchInput" @keydown.tab.prevent="handleTab" @keydown.stop autofocus />
                     <a class="a close-search" @click="closeSearch">
                         <i class="fas fa-times"></i>
                     </a>
@@ -16,22 +16,19 @@
                         <div class="search-scope">
                             <div class="scope-option" v-for="(option, index) in availableScopes" :key="option.value" :class="{
                                 active: searchScope === option.value,
-                                'keyboard-focused': currentScopeIndex === index
+                                'keyboard-focused': currentScopeIndex === index && selecting==0
                             }" @click.stop="selectScope(option.value)">
                                 <i :class="option.icon"></i>
                                 {{ option.label }}
                             </div>
                         </div>
                         <div class="search-type" v-if="searchScope !== 'current' || getCurrentContext?.type !== 'file'">
-                            <div class="type-option" :class="{ active: searchType === 'title' }"
-                                @click.stop="searchType = 'title'">
-                                <i class="fas fa-heading"></i>
-                                标题
-                            </div>
-                            <div class="type-option" :class="{ active: searchType === 'content' }"
-                                @click.stop="searchType = 'content'">
-                                <i class="fas fa-align-left"></i>
-                                内容
+                            <div class="type-option" v-for="(option, index) in availableTypes" :key="option.value" :class="{
+                                active: searchType === option.value,
+                                'keyboard-focused': currentTypeIndex === index && selecting==1
+                            }" @click.stop="selectType(option.value)">
+                                <i :class="option.icon"></i>
+                                {{ option.label }}
                             </div>
                         </div>
                     </div>
@@ -58,6 +55,8 @@ const searchType = ref('title');
 const searchScope = ref('global');
 const searchInput = ref(null);
 const currentScopeIndex = ref(0);
+const currentTypeIndex = ref(0);
+const selecting = ref(0); // 是否在选择范围
 const data=inject('data');
 const isSearchOptionsVisible = ref(false);
 
@@ -136,6 +135,12 @@ const availableScopes = computed(() => {
     return scopes;
 });
 
+
+const availableTypes = computed(() => [
+    { value: 'title', label: '标题', icon: 'fas fa-heading' },
+    { value: 'content', label: '内容', icon: 'fas fa-align-left' }
+]);
+
 function handleSearch() {
     if (!searchQuery.value.trim()) return;
 
@@ -193,10 +198,17 @@ function search() {
     closeSearch();
 }
 
-function handleScopeNavigation(direction) {
-    const maxIndex = availableScopes.value.length - 1;
-    currentScopeIndex.value = Math.max(0, Math.min(maxIndex, currentScopeIndex.value + direction));
-    selectScope(availableScopes.value[currentScopeIndex.value].value);
+function handleNavigation(direction) {
+    if(selecting.value==0){
+        const maxIndex = availableScopes.value.length - 1;
+        currentScopeIndex.value = Math.max(0, Math.min(maxIndex, currentScopeIndex.value + direction));
+        selectScope(availableScopes.value[currentScopeIndex.value].value);
+    }else{
+        // 切换类型
+        const maxIndex = availableTypes.value.length - 1;
+        currentTypeIndex.value = Math.max(0, Math.min(maxIndex, currentTypeIndex.value + direction));
+        selectType(availableTypes.value[currentTypeIndex.value].value);
+    }
 }
 
 function selectScope(value) {
@@ -204,18 +216,28 @@ function selectScope(value) {
     currentScopeIndex.value = availableScopes.value.findIndex(scope => scope.value === value);
 }
 
+function selectType(value) {
+    searchType.value = value;
+    currentTypeIndex.value = availableTypes.value.findIndex(type => type.value === value);
+}
+// 切换上下键选择区域还是类型，并选择
+function handleTab() {
+    selecting.value = !selecting.value;
+    if (selecting.value) {
+        // 切换到选择范围
+        currentScopeIndex.value = availableScopes.value.findIndex(scope => scope.value === searchScope.value);
+    } else {
+        // 切换到选择类型
+        currentTypeIndex.value = availableTypes.value.findIndex(type => type.value === searchType.value);
+    }
+
+}
+
 function closeSearch() {
     emits('update:isSearchFocused', false);
     searchQuery.value = '';
 }
 
-onMounted(() => {
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeSearch();
-        }
-    });
-});
 
 // 监听搜索框显示状态
 watch(() => props.isSearchFocused, (newVal) => {
@@ -228,6 +250,9 @@ watch(() => props.isSearchFocused, (newVal) => {
             searchScope.value = 'global';
             currentScopeIndex.value = availableScopes.value.length - 1;
         }
+        searchType.value = 'title';
+        currentTypeIndex.value = 0;
+        selecting.value = 0;
         
         // 延迟显示选项菜单,产生动画效果
         nextTick(() => {

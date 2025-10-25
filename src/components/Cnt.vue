@@ -51,11 +51,15 @@
     background-color: #ffffffa0;
     border-radius: 10px;
     animation: fade 500ms;
+    outline: 2.5px solid transparent;
+    transition: outline-color 200ms;
+    --olcl: #2983cc;
 }
 
 @media (prefers-color-scheme: dark){
     #body{
         background-color: #000000a0;
+        --olcl: #61ccff;
     }
 }
 
@@ -153,7 +157,15 @@ pre code.hljs.language-liter{
     color: #000;
     font-size: 1.2em;
     font-family: 'Times New Roman', Times, "SimSun", "NSimSun", "STSong", "宋体", serif;
+    padding: 35px calc(20% - 60px);
+    margin: 0 auto;
 }
+
+body.mobile pre code.hljs.language-liter{
+    padding: 30px 20px;
+    width: 100%;
+}
+
 .hljs.language-liter::selection,
 .hljs.language-liter *::selection{
     background-color: #c7a07230;
@@ -275,6 +287,20 @@ tbody tr:nth-of-type(even) {
     background-color: #a0a0a018;
 }
 
+mark {
+    background-color: #2983cc40;
+    border: 2px solid #2983cc;
+    padding: 2px;
+    margin: -4px;
+    border-radius: 5px;
+    transition: 100ms ease;
+}
+
+mark.current {
+    background-color: #2983cc;
+    color: #fff;
+}
+
 @media (prefers-color-scheme: dark){
     .a.jump{
         color: #61ccff;
@@ -304,26 +330,10 @@ tbody tr:nth-of-type(even) {
         
     }
     code.hljs.language-liter .hljs-string{
-        color: #b4d5f0;
+        color: #b5d4eb;
         
     }
-}
-
-mark {
-    background-color: #2983cc40;
-    border: 2px solid #2983cc;
-    padding: 2px;
-    margin: -4px;
-    border-radius: 5px;
-    transition: 100ms ease;
-}
-
-mark.current {
-    background-color: #2983cc;
-    color: #fff;
-}
-
-@media (prefers-color-scheme: dark) {
+    
     mark {
         background-color: #61ccff37;
         border-color: #61ccff80;
@@ -473,23 +483,49 @@ onMounted(() => {
     nextTick(() => {
         highlightText();
     });
-    window.addEventListener('hashchange', () => {
-        nextTick(() => {
-            highlightText();
-        });
-    });
-    window.addEventListener('keydown', (e) => {
-        if (!hasHighlight.value) return;
+    // window.addEventListener('hashchange', () => {
+    //     nextTick(() => {
+    //         highlightText();
+    //     });
+    // });
+    // window.addEventListener('keydown', (e) => {
+    //     if (!hasHighlight.value) return;
         
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    //     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    //         e.preventDefault();
+    //         nextHighlight();
+    //     } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+    //         e.preventDefault();
+    //         prevHighlight();
+    //     }
+
+    // });
+    window.addEventListener('keydown', (e) => {
+
+        // ctrl+A 全选文章内容（#cnt-cnt）（防止默认全选整个页面）
+        if (e.key === 'a' && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
-            nextHighlight();
-        } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
-            e.preventDefault();
-            prevHighlight();
+            const cnt = document.getElementById('cnt-cnt');
+            if (!cnt) return;
+
+            const range = document.createRange();
+            range.selectNodeContents(cnt);
+            
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            const body = document.getElementById('body');
+            if (!body) return;
+            body.style.outlineColor = 'var(--olcl)';
+            setTimeout(() => {
+                body.style.outlineColor = 'transparent';
+            }, 300);
         }
     });
 });
+
+
 
 onUnmounted(() => {
     window.removeEventListener('hashchange', highlightText);

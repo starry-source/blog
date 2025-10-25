@@ -7,7 +7,7 @@
       :href="(index == route.params.path.length - 1) ? null : ('#/list/' + route.params.path.slice(0, index + 1).join('/'))"
       :class="(index == route.params.path.length - 1) ? 'text' : 'a'">{{ item }}</a>
   </div>
-  <div id="body">
+  <div id="body" class="page-list">
     <span id="dictname">{{ directory().name }}</span>
     <span id="dictdetail" v-html="directory().detail"></span>
     <div id="cnt">
@@ -160,22 +160,59 @@ function path() {
   return route.params.path ? '/' + route.params.path.join('/') : '';
 }
 
-// const directory = data.value[route.params.name];
-// console.log(data);
-// defineProps(['path']);
-//   export default {
-//     components: {
-//       DirectoryTree
-//     },
-//     props: ['directory'],
-//     computed: {
-//       currentPath() {
-//         return this.$route.params.path.split('/').filter(Boolean);
-//       }
-//     },
-//     created() {
-//       // 如果需要从父组件传递的数据，可以在这里处理
-//       // 例如，this.directory = this.$props.directory; 但在这个例子中，我们已经通过 props 传递了
-//     }
-//   };
+// 相关快捷键(仅在本组件内生效)
+
+
+document.addEventListener('keydown', (e) => {
+  // 是否在此页
+  if (!window.location.hash.startsWith('#/list')) {
+    return;
+  }
+
+  // 如果在搜索框中，忽略快捷键
+  if (document.activeElement.tagName === 'INPUT') {
+    return;
+  }
+  
+  // 返回上一级目录的浏览
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    if (route.params.path && route.params.path.length > 0) {
+      const newPath = route.params.path.slice(0, -1).join('/');
+      window.location.hash = '#/list' + (newPath ? '/' + newPath : '');
+    } else {
+      // 已经在根目录，不能再返回
+    }
+  }
+  // 上下在分类和文章列表中切换项目(先分类，再文章)，enter打开
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    const links = Array.from(document.querySelectorAll('#cnt .a'));
+    if (links.length === 0) return;
+    const activeElement = document.activeElement;
+    let currentIndex = links.indexOf(activeElement);
+    if (currentIndex === -1) {
+      // 没有焦点，聚焦第一个
+      links[0].focus();
+    } else {
+      // 有焦点，移动到下一个
+      if (e.key === 'ArrowUp') {
+        currentIndex = (currentIndex - 1 + links.length) % links.length;
+      } else if (e.key === 'ArrowDown') {
+        currentIndex = (currentIndex + 1) % links.length;
+      }
+      links[currentIndex].focus();
+    }
+  }
+  if (e.key === 'Enter') {
+    const activeElement = document.activeElement;
+    if (activeElement && activeElement.classList.contains('a')) {
+      activeElement.click();
+    }
+  }
+
+
+
+});
+
 </script>

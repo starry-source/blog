@@ -367,4 +367,12 @@ function closeMobileMenu() {
 function openSearch() {
     isSearchFocused.value = true;
 }
+
+// 监听 ctrl+F 打开搜索
+window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        openSearch();
+    }
+});
 </script>
