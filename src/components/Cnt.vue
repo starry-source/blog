@@ -483,11 +483,11 @@ onMounted(() => {
     nextTick(() => {
         highlightText();
     });
-    // window.addEventListener('hashchange', () => {
-    //     nextTick(() => {
-    //         highlightText();
-    //     });
-    // });
+    window.addEventListener('hashchange', () => {
+        nextTick(() => {
+            highlightText();
+        });
+    });
     // window.addEventListener('keydown', (e) => {
     //     if (!hasHighlight.value) return;
         
