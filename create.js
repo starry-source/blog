@@ -36,7 +36,15 @@ const stringMode = {
 
 const titleMode = {
   className: 'title',
-  begin: '# ?',
+  begin: '^# ',
+  end: '\n',
+  returnEnd: true,
+  contains: [longMode] 
+};
+
+const quoteMode = {
+  className: 'quote',
+  begin: '(?<=\>) ',
   end: '\n',
   returnEnd: true,
   contains: [longMode] 
@@ -55,6 +63,7 @@ const myCustomLanguage = {
     commentMode,
     stringMode,
     titleMode,
+    quoteMode,
     authorMode
   ]
 };

@@ -180,6 +180,12 @@ code.hljs.language-liter .hljs-title{
     font-weight: bold;
     font-size: 1.4em;
 }
+code.hljs.language-liter .hljs-quote{
+    font-family: '楷体','楷体_GB2312','SimKai','KaiTi','STKaiti';
+    color: #030404;
+    display: inline-block;
+    padding: 25px 20px;
+}
 code.hljs.language-liter .hljs-string{
     color: #164a75;
     
@@ -310,8 +316,11 @@ mark.current {
     }
     
     pre code.hljs.language-liter{
-        background-color: #3b3832ce;
+        background-color: #35322cce;
         color: #f2f2f2;
+    }
+    code.hljs.language-liter .hljs-quote{
+        color: #f8f8f8;
     }
     pre code.hljs{
         background-color: #171717;
